@@ -1,13 +1,14 @@
 pipeline {
-  agent {
-    node {
-      label 'master'
+    agent {
+        docker {
+            image 'gradle/gradle-enterprise-test-distribution-agent'
+        }
     }
-  }
-  stage('Gradle Build') {
-      steps {
-        sh 'gradle clean build -x test -b build-server.gradle'
-      }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'gradle clean build -x test -b build-server.gradle'
+            }
+        }
     }
-  }
 }
